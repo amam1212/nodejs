@@ -42,7 +42,7 @@ router.post("/", (req, res) => {
       'code': 500
     }
     res.json(data);
-  
+
   }
 });
 
