@@ -12,14 +12,35 @@ app.use(bodyParser.urlencoded({
 }));
 
 
-var server = new StellarSdk.Server('https://api.omchain.network/');
 
 router.post("/", (req, res) => {
   try {
 
-
     var json = req.body;
-    var transaction = new StellarSdk.Transaction(json.xdr, 'Omplatform Stellar Network ; April 2019');
+
+
+    var url = 'https://api.omchain.network/';
+    var nertworkPasspharse = 'Omplatform Stellar Network ; April 2019';
+
+
+
+
+
+      if (json.hasOwnProperty('network')) {
+
+        if (json.network === 'TESTNET') {
+          url = 'https://horizon-testnet.stellar.org';
+          nertworkPasspharse = 'Test SDF Network ; September 2015';
+        }
+
+      }
+
+
+    var server = new StellarSdk.Server(url);
+    var transaction = new StellarSdk.Transaction(json.xdr, nertworkPasspharse);
+
+
+
     let code = null;
     if (transaction.memo.value) {
       code = transaction.memo.value.toString()
